@@ -34,6 +34,9 @@ services:
   frontend:
     env_file: .env
     build: ./frontend/
+    volumes:
+      - static:/frontend_static
+    command: cp -r /app/build/. /frontend_static/
   gateway:
     volumes:
       - static:/staticfiles/
