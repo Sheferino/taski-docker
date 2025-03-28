@@ -1,5 +1,10 @@
 # taski-docker
 
+## Создание
+
+docker build -t sheferino/taski_frontend:latest frontend/
+docker build -t sheferino/taski_backend:latest backend/
+
 
 ## Развертывание
 1. Создать том для БД и статики
