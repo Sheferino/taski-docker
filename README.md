@@ -23,7 +23,17 @@ docker run --env-file .env --net django-network --name taski_backend_container -
 docker exec taski_backend_container python manage.py migrate
 '''
 
+## Запуск
+
+docker compose up
+docker compose exec backend python manage.py collectstatic
+docker compose exec backend cp -r /app/collected_static/. /backend_static/static/ 
+
 ## Разное
 Запуск psql для работы с Postgres
 
 docker exec -it db psql -U django_user -d django 
+
+Запуск консоли контейнера
+
+docker compose exec -it backend sh

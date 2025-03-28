@@ -8,7 +8,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '158.160.92.38',]
 
 
 # Application definition
@@ -106,10 +106,14 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+# При планировании архитектуры было решено,
+# что статические файлы Django должны быть доступны по адресу /static/
 STATIC_URL = '/static/'
+# Указываем корневую директорию для сборки статических файлов;
+# в контейнере это будет /app/collected_static
+STATIC_ROOT = BASE_DIR / 'collected_static'
+# Теперь при вызове команды python manage.py collectstatic
+# Django будет копировать все статические файлы в директорию collected_static 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
