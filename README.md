@@ -26,6 +26,15 @@ docker exec taski_backend_container python manage.py migrate
 
 ## Запуск
 
+### Подготовка сервера
+sudo apt update
+sudo apt install curl
+curl -fSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh
+sudo apt install docker-compose-plugin
+
+scp -i path_to_SSH/SSH_name docker-compose.production.yml username@server_ip:/home/username/taski/docker-compose.production.yml
+
 ### отладочный
 docker compose up
 docker compose exec backend python manage.py collectstatic
@@ -33,10 +42,9 @@ docker compose exec backend cp -r /app/collected_static/. /backend_static/static
 
 ### Боевой
 
-docker compose -f docker-compose.production.yml up
+docker compose -f docker-compose.production.yml up -d
 docker compose -f docker-compose.production.yml exec backend python manage.py collectstatic
-docker compose -f docker-compose.production.yml exec backend sh -c "cp -r /app/collected_static/. /backend_static/sta
-tic/"
+docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
 docker compose -f docker-compose.production.yml exec backend python manage.py migrate
 
 ## Разное
@@ -47,3 +55,7 @@ docker exec -it db psql -U django_user -d django
 Запуск консоли контейнера
 
 docker compose exec -it backend sh
+
+Иногда копирование статики фронтенда не проходит. Тогда команда
+docker compose -f docker-compose.production.yml exec backend sh -c "cp -r /app/collected_static/. /backend_
+static/static/"
